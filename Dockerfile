@@ -1,4 +1,3 @@
-# Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
 # Set environment variables
@@ -13,6 +12,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
+    netcat \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -22,9 +22,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
-# Initialize database (this will run when container starts)
-COPY entrypoint.sh .
-RUN chmod +x entrypoint.sh
+# Set execute permissions and convert line endings
+RUN chmod +x entrypoint.sh && \
+    sed -i 's/\r$//' entrypoint.sh
 
 # Expose the port the app runs on
 EXPOSE 5000
