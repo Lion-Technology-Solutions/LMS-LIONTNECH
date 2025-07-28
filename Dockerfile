@@ -8,11 +8,11 @@ ENV FLASK_APP run.py
 # Set work directory
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies (using netcat-openbsd)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
-    netcat \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
