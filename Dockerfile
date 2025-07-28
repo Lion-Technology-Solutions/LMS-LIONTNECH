@@ -4,6 +4,7 @@ FROM python:3.9-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV FLASK_APP run.py
 
 # Set work directory
 WORKDIR /app
@@ -21,8 +22,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
-# Collect static files (if using Flask's built-in)
-RUN python -c "from app import create_app; app = create_app(); app.app_context().push()"
+# Initialize database (this will run when container starts)
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
 
-# Run gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "run:app"]
+# Expose the port the app runs on
+EXPOSE 5000
+
+# Run the application
+CMD ["./entrypoint.sh"]
