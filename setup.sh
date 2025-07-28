@@ -14,8 +14,8 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 # Clone your repository (replace with your actual repo)
-git clone https://github.com/yourusername/liontech-lms.git
-cd liontech-lms
+git https://github.com/Lion-Technology-Solutions/LMS-LIONTNECH.git
+cd LMS-LIONTNECH
 
 # Create .env file with your configuration
 cat > .env <<EOL
